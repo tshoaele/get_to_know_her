@@ -1,1043 +1,896 @@
+
 <!DOCTYPE html>
-<!-- saved from url=(0045)https://heroic-sopapillas-ca4492.netlify.app/ -->
-<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Know Her — Partner Cycle Tracker</title>
-<link href="./Know Her — Partner Cycle Tracker_files/css2" rel="stylesheet">
-<style>
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-:root {
-  --bg: #fdf0f2;
-  --surface: #fff5f6;
-  --surface2: #fde0e4;
-  --border: #f5c8ce;
-  --rose: #c0425a;
-  --rose-dark: #8c2a3e;
-  --text: #3d1a22;
-  --muted: #a07080;
-  --period-col: #c0392b;
-  --follicular-col: #2e86ab;
-  --ovulation-col: #1e8c5a;
-  --luteal-col: #8e44ad;
-  --period-bg: #fff2f2;
-  --follicular-bg: #f0f6ff;
-  --ovulation-bg: #f0faf5;
-  --luteal-bg: #faf0ff;
-}
-
-html { scroll-behavior: smooth; }
-
-body {
-  font-family: 'Syne', sans-serif;
-  background: var(--bg);
-  color: var(--text);
-  min-height: 100vh;
-  overflow-x: hidden;
-}
-
-header {
-  padding: 44px 28px 36px;
-  border-bottom: 1px solid var(--border);
-  background: linear-gradient(160deg, #f9d0d8 0%, #fdf0f2 100%);
-}
-
-.eyebrow {
-  font-size: 0.6rem;
-  letter-spacing: 5px;
-  text-transform: uppercase;
-  color: var(--rose);
-  margin-bottom: 10px;
-}
-
-header h1 {
-  font-family: 'Lora', serif;
-  font-style: italic;
-  font-size: 2.6rem;
-  font-weight: 400;
-  color: var(--text);
-  line-height: 1.1;
-}
-
-header h1 span {
-  font-style: normal;
-  font-family: 'Syne', sans-serif;
-  font-weight: 800;
-  font-size: 0.78rem;
-  letter-spacing: 4px;
-  text-transform: uppercase;
-  display: block;
-  color: var(--rose);
-  margin-top: 8px;
-}
-
-main {
-  max-width: 500px;
-  margin: 0 auto;
-  padding: 0 0 100px;
-}
-
-/* PHASE HERO */
-.phase-hero {
-  margin: 24px 18px 0;
-  border-radius: 28px;
-  padding: 28px 24px;
-  position: relative;
-  overflow: hidden;
-  border: 1.5px solid var(--border);
-  background: var(--surface);
-  transition: background 0.5s, border-color 0.5s;
-}
-
-.phase-hero::after {
-  content: '';
-  position: absolute;
-  top: -80px; right: -80px;
-  width: 240px; height: 240px;
-  border-radius: 50%;
-  opacity: 0.08;
-  transition: background 0.5s;
-  pointer-events: none;
-}
-
-.hero-menstrual  { background: var(--period-bg);     border-color: #f5b0b0; }
-.hero-menstrual::after  { background: var(--period-col); }
-.hero-follicular { background: var(--follicular-bg); border-color: #b8d8f0; }
-.hero-follicular::after { background: var(--follicular-col); }
-.hero-ovulation  { background: var(--ovulation-bg);  border-color: #a0dcc0; }
-.hero-ovulation::after  { background: var(--ovulation-col); }
-.hero-luteal     { background: var(--luteal-bg);     border-color: #d0b0e8; }
-.hero-luteal::after     { background: var(--luteal-col); }
-
-.hero-top {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 14px;
-}
-
-.phase-dot {
-  width: 9px; height: 9px;
-  border-radius: 50%;
-  flex-shrink: 0;
-  animation: pulse 2s infinite;
-}
-
-@keyframes pulse {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50%       { opacity: 0.4; transform: scale(0.65); }
-}
-
-.hero-lbl {
-  font-size: 0.58rem;
-  letter-spacing: 4px;
-  text-transform: uppercase;
-  color: var(--muted);
-}
-
-.hero-name {
-  font-family: 'Lora', serif;
-  font-style: italic;
-  font-size: 2rem;
-  color: var(--text);
-  margin-bottom: 3px;
-  line-height: 1.1;
-}
-
-.hero-sub {
-  font-size: 0.75rem;
-  color: var(--muted);
-  margin-bottom: 18px;
-}
-
-.hero-action {
-  background: rgba(192, 66, 90, 0.06);
-  border-left: 3px solid var(--rose);
-  border-radius: 0 12px 12px 0;
-  padding: 14px 18px;
-  font-size: 0.95rem;
-  font-weight: 600;
-  color: var(--text);
-  line-height: 1.5;
-  transition: border-left-color 0.4s;
-}
-
-.hero-chance {
-  margin-top: 11px;
-  font-size: 0.74rem;
-  font-style: italic;
-  color: var(--muted);
-}
-
-.cd-row {
-  display: flex;
-  gap: 10px;
-  margin-top: 18px;
-}
-
-.cd-box {
-  flex: 1;
-  background: rgba(192, 66, 90, 0.05);
-  border: 1px solid rgba(192, 66, 90, 0.13);
-  border-radius: 14px;
-  padding: 14px 8px;
-  text-align: center;
-}
-
-.cd-num {
-  font-size: 1.9rem;
-  font-weight: 800;
-  color: var(--rose);
-  line-height: 1;
-}
-
-.cd-lbl {
-  font-size: 0.54rem;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  color: var(--muted);
-  margin-top: 5px;
-  line-height: 1.4;
-}
-
-/* CARD */
-.card {
-  margin: 18px 18px 0;
-  background: var(--surface);
-  border-radius: 24px;
-  padding: 24px 22px;
-  border: 1.5px solid var(--border);
-  box-shadow: 0 2px 16px rgba(192, 66, 90, 0.05);
-}
-
-.sec-lbl {
-  font-size: 0.58rem;
-  letter-spacing: 4px;
-  text-transform: uppercase;
-  color: var(--rose);
-  margin-bottom: 18px;
-  font-weight: 700;
-}
-
-.field { margin-bottom: 14px; }
-
-.field label {
-  display: block;
-  font-size: 0.65rem;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: var(--muted);
-  margin-bottom: 7px;
-}
-
-.field input {
-  width: 100%;
-  background: var(--bg);
-  border: 1.5px solid var(--border);
-  border-radius: 12px;
-  padding: 13px 16px;
-  font-family: 'Syne', sans-serif;
-  font-size: 0.9rem;
-  color: var(--text);
-  outline: none;
-  transition: border-color 0.2s, box-shadow 0.2s;
-  -webkit-appearance: none;
-}
-
-.field input:focus {
-  border-color: var(--rose);
-  box-shadow: 0 0 0 3px rgba(192, 66, 90, 0.1);
-}
-
-.btn {
-  width: 100%;
-  padding: 16px;
-  background: linear-gradient(135deg, var(--rose) 0%, var(--rose-dark) 100%);
-  border: none;
-  border-radius: 14px;
-  font-family: 'Syne', sans-serif;
-  font-size: 0.85rem;
-  font-weight: 700;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: #fff;
-  cursor: pointer;
-  transition: transform 0.2s, box-shadow 0.2s;
-  box-shadow: 0 4px 20px rgba(192, 66, 90, 0.35);
-  margin-top: 6px;
-}
-
-.btn:hover  { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(192, 66, 90, 0.45); }
-.btn:active { transform: translateY(0); }
-
-/* SYMPTOM TRACKER */
-.symptom-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 10px;
-  margin-bottom: 16px;
-}
-
-.symptom-btn {
-  padding: 12px;
-  background: var(--bg);
-  border: 1.5px solid var(--border);
-  border-radius: 10px;
-  font-family: 'Syne', sans-serif;
-  font-size: 0.8rem;
-  color: var(--text);
-  cursor: pointer;
-  transition: all 0.2s;
-  text-align: left;
-}
-
-.symptom-btn:hover {
-  border-color: var(--rose);
-}
-
-.symptom-btn.active {
-  background: rgba(192, 66, 90, 0.1);
-  border-color: var(--rose);
-  font-weight: 600;
-}
-
-.notes-field {
-  margin: 14px 0;
-}
-
-.notes-field textarea {
-  width: 100%;
-  min-height: 80px;
-  background: var(--bg);
-  border: 1.5px solid var(--border);
-  border-radius: 12px;
-  padding: 13px 16px;
-  font-family: 'Syne', sans-serif;
-  font-size: 0.85rem;
-  color: var(--text);
-  outline: none;
-  resize: vertical;
-  transition: border-color 0.2s, box-shadow 0.2s;
-}
-
-.notes-field textarea:focus {
-  border-color: var(--rose);
-  box-shadow: 0 0 0 3px rgba(192, 66, 90, 0.1);
-}
-
-.log-history {
-  margin-top: 18px;
-  max-height: 300px;
-  overflow-y: auto;
-}
-
-.log-entry {
-  background: var(--bg);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 12px 14px;
-  margin-bottom: 10px;
-  font-size: 0.82rem;
-}
-
-.log-date {
-  font-size: 0.7rem;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  color: var(--rose);
-  font-weight: 600;
-  margin-bottom: 6px;
-}
-
-.log-symptoms {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin-bottom: 6px;
-}
-
-.log-tag {
-  display: inline-block;
-  padding: 4px 10px;
-  background: rgba(192, 66, 90, 0.08);
-  border-radius: 6px;
-  font-size: 0.7rem;
-  color: var(--text);
-}
-
-.log-notes {
-  color: var(--muted);
-  font-size: 0.8rem;
-  line-height: 1.4;
-  font-style: italic;
-}
-
-/* 4 MOVES */
-.moves { margin: 18px 18px 0; }
-
-.move {
-  border-radius: 22px;
-  margin-bottom: 12px;
-  overflow: hidden;
-  border: 1.5px solid;
-  position: relative;
-  transition: transform 0.2s, box-shadow 0.2s;
-}
-
-.move:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.06); }
-
-.move-dot {
-  position: absolute;
-  top: 18px; right: 18px;
-  width: 9px; height: 9px;
-  border-radius: 50%;
-  animation: pulse 1.5s infinite;
-  display: none;
-}
-
-.move-head {
-  display: flex;
-  align-items: flex-start;
-  gap: 14px;
-  padding: 20px 20px 14px;
-}
-
-.move-n {
-  font-size: 2.8rem;
-  font-weight: 800;
-  line-height: 1;
-  opacity: 0.12;
-  flex-shrink: 0;
-}
-
-.move-tag {
-  font-size: 0.58rem;
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  font-weight: 700;
-  margin-bottom: 5px;
-}
-
-.move-title {
-  font-family: 'Lora', serif;
-  font-size: 1.05rem;
-  line-height: 1.45;
-  color: var(--text);
-}
-
-.move-body {
-  padding: 14px 20px 20px;
-  font-size: 0.8rem;
-  color: var(--muted);
-  line-height: 1.75;
-  border-top: 1px solid rgba(0,0,0,0.05);
-}
-
-.m-period     { background: var(--period-bg);     border-color: #f0b0b0; }
-.m-period     .move-tag { color: var(--period-col); }
-.m-period     .move-n   { color: var(--period-col); }
-.m-period     .move-dot { background: var(--period-col); }
-
-.m-follicular { background: var(--follicular-bg); border-color: #b0d0ee; }
-.m-follicular .move-tag { color: var(--follicular-col); }
-.m-follicular .move-n   { color: var(--follicular-col); }
-.m-follicular .move-dot { background: var(--follicular-col); }
-
-.m-ovulation  { background: var(--ovulation-bg);  border-color: #90d8b8; }
-.m-ovulation  .move-tag { color: var(--ovulation-col); }
-.m-ovulation  .move-n   { color: var(--ovulation-col); }
-.m-ovulation  .move-dot { background: var(--ovulation-col); }
-
-.m-luteal     { background: var(--luteal-bg);     border-color: #c8a0e0; }
-.m-luteal     .move-tag { color: var(--luteal-col); }
-.m-luteal     .move-n   { color: var(--luteal-col); }
-.m-luteal     .move-dot { background: var(--luteal-col); }
-
-/* CALENDAR */
-.month-nav {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 14px;
-}
-
-.month-nav button {
-  background: var(--surface2);
-  border: 1.5px solid var(--border);
-  color: var(--muted);
-  width: 34px; height: 34px;
-  border-radius: 50%;
-  cursor: pointer;
-  font-size: 1.1rem;
-  display: flex; align-items: center; justify-content: center;
-  transition: all 0.2s;
-}
-
-.month-nav button:hover { border-color: var(--rose); color: var(--rose); }
-
-.month-lbl {
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 4px;
-  text-transform: uppercase;
-  color: var(--text);
-}
-
-.cal-grid {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 3px;
-}
-
-.dow {
-  text-align: center;
-  font-size: 0.58rem;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  color: var(--muted);
-  padding-bottom: 8px;
-}
-
-.day {
-  aspect-ratio: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  font-size: 0.78rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.15s;
-  color: var(--text);
-}
-
-.day:hover:not(.empty) { transform: scale(1.12); opacity: 0.85; }
-.day.empty    { cursor: default; }
-.day.today    { border: 2px solid var(--rose); color: var(--rose); font-weight: 700; }
-.day.d-period     { background: var(--period-col); color: #fff; }
-.day.d-follicular { background: #dceef8; color: #1a6a90; }
-.day.d-ovulation  { background: var(--ovulation-col); color: #fff; }
-.day.d-fertile    { background: #c0eed8; color: #0e6040; }
-.day.d-luteal     { background: #e8d0f8; color: #6030a0; }
-.day.d-pms        { background: #d4b8f0; color: #501890; }
-.day.d-predicted  { background: #fcd0d0; color: #a02020; }
-
-.legend {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-top: 14px;
-  padding-top: 14px;
-  border-top: 1px solid var(--border);
-}
-
-.leg {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  font-size: 0.62rem;
-  color: var(--muted);
-}
-
-.leg-dot {
-  width: 8px; height: 8px;
-  border-radius: 50%;
-  flex-shrink: 0;
-}
-
-/* TOAST */
-.toast {
-  position: fixed;
-  bottom: 28px;
-  left: 50%;
-  transform: translateX(-50%) translateY(100px);
-  background: linear-gradient(135deg, var(--rose), var(--rose-dark));
-  color: #fff;
-  padding: 13px 28px;
-  border-radius: 100px;
-  font-size: 0.8rem;
-  font-weight: 700;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  box-shadow: 0 8px 28px rgba(192, 66, 90, 0.45);
-  transition: transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
-  z-index: 999;
-  white-space: nowrap;
-}
-
-.toast.show { transform: translateX(-50%) translateY(0); }
-
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(20px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-.phase-hero { animation: fadeUp 0.45s ease both; }
-.card       { animation: fadeUp 0.45s 0.08s ease both; }
-.moves      { animation: fadeUp 0.45s 0.14s ease both; }
-</style>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Know Her — Partner Cycle Tracker</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    :root {  
+      --bg: #fdf0f2;  
+      --surface: #fff5f6;  
+      --surface2: #fde0e4;  
+      --border: #f5c8ce;  
+      --rose: #c0425a;  
+      --rose-dark: #8c2a3e;  
+      --text: #3d1a22;  
+      --muted: #a07080;  
+      --period-col: #c0392b;  
+      --follicular-col: #2e86ab;  
+      --ovulation-col: #1e8c5a;  
+      --luteal-col: #8e44ad;  
+      --period-bg: #fff2f2;  
+      --follicular-bg: #f0f6ff;  
+      --ovulation-bg: #f0faf5;  
+      --luteal-bg: #faf0ff;  
+      --green: #1e8c5a;  
+      --green-bg: #f0faf5;  
+      --green-border: #a0dcc0;  
+      --amber: #ba7517;  
+      --amber-bg: #fef9ec;  
+      --amber-border: #fac775;  
+      --red: #a32d2d;  
+      --red-bg: #fcebeb;  
+      --red-border: #f7c1c1;
+      --font-primary: 'Inter', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+      --radius-lg: 24px;
+      --radius-md: 14px;
+      --radius-sm: 8px;
+    }
+
+    [data-theme="masculine"] {
+      --bg: #0f1115;
+      --surface: #161920;
+      --surface2: #1f242e;
+      --border: #2a313e;
+      --rose: #3b82f6;
+      --rose-dark: #1d4ed8;
+      --text: #f3f4f6;
+      --muted: #9ca3af;
+      --period-col: #ef4444;
+      --follicular-col: #60a5fa;
+      --ovulation-col: #10b981;
+      --luteal-col: #a855f7;
+      --period-bg: #1e1b1b;
+      --follicular-bg: #111827;
+      --ovulation-bg: #064e3b;
+      --luteal-bg: #2e1065;
+      --green: #10b981;
+      --green-bg: rgba(16, 185, 129, 0.1);
+      --green-border: #047857;
+      --amber: #f59e0b;
+      --amber-bg: rgba(245, 158, 11, 0.1);
+      --amber-border: #b45309;
+      --red: #ef4444;
+      --red-bg: rgba(239, 68, 68, 0.1);
+      --red-border: #b91c1c;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {  
+      font-family: var(--font-primary);  
+      background: var(--bg);  
+      color: var(--text);  
+      min-height: 100vh;  
+      overflow-x: hidden;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    header {  
+      padding: 32px 24px;  
+      border-bottom: 1px solid var(--border);  
+      background: var(--surface);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .brand-meta { flex: 1; }
+    .eyebrow {  
+      font-family: var(--font-mono);
+      font-size: 0.65rem;  
+      font-weight: 700;
+      letter-spacing: 2px;  
+      text-transform: uppercase;  
+      color: var(--rose);  
+      margin-bottom: 6px;
+    }
+    header h1 {  
+      font-size: 1.8rem;  
+      font-weight: 800;  
+      color: var(--text);  
+      line-height: 1.1;
+      letter-spacing: -0.5px;
+    }
+    header h1 span {  
+      font-family: var(--font-primary);  
+      font-weight: 500;  
+      font-size: 0.8rem;  
+      letter-spacing: 0px;  
+      text-transform: none;  
+      display: block;  
+      color: var(--muted);  
+      margin-top: 4px;
+    }
+
+    .theme-toggle {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 10px 14px;
+      border-radius: var(--radius-sm);
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+    }
+    .theme-toggle:hover {
+      background: var(--rose);
+      color: #fff;
+      border-color: var(--rose);
+    }
+
+    .tab-nav {  
+      display: flex;  
+      overflow-x: auto;  
+      gap: 4px;  
+      background: var(--surface);  
+      border-bottom: 1px solid var(--border);  
+      padding: 4px 12px 0;  
+      position: sticky;  
+      top: 0;  
+      z-index: 100;  
+      scrollbar-width: none;
+    }
+    .tab-nav::-webkit-scrollbar { display: none; }
+    .tab-btn {  
+      flex-shrink: 0;  
+      padding: 12px 16px;  
+      background: none;  
+      border: none;  
+      border-bottom: 2px solid transparent;  
+      font-family: var(--font-primary);  
+      font-size: 0.75rem;  
+      font-weight: 600;  
+      color: var(--muted);  
+      cursor: pointer;  
+      transition: all 0.2s;  
+      white-space: nowrap;
+    }
+    .tab-btn:hover { color: var(--rose); }
+    .tab-btn.active { color: var(--rose); border-bottom-color: var(--rose); font-weight: 700; }
+    
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+    main { max-width: 500px; margin: 0 auto; padding: 0 0 100px; }
+    
+    .phase-hero {  
+      margin: 20px 16px 0;  
+      border-radius: var(--radius-lg);  
+      padding: 24px;  
+      position: relative;  
+      overflow: hidden;  
+      border: 1px solid var(--border);  
+      background: var(--surface);  
+      transition: background 0.3s, border-color 0.3s;
+    }
+    .hero-menstrual  { background: var(--period-bg);     border-color: var(--period-col); }
+    .hero-follicular { background: var(--follicular-bg); border-color: var(--follicular-col); }
+    .hero-ovulation  { background: var(--ovulation-bg);  border-color: var(--ovulation-col); }
+    .hero-luteal     { background: var(--luteal-bg);     border-color: var(--luteal-col); }
+    
+    .hero-top { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
+    .phase-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; animation: pulse 2s infinite; }
+    
+    @keyframes pulse {  
+      0%, 100% { opacity: 1; transform: scale(1); }  
+      50% { opacity: 0.4; transform: scale(0.7); }
+    }
+    
+    .hero-lbl { font-family: var(--font-mono); font-size: 0.65rem; text-transform: uppercase; color: var(--muted); font-weight: 700; }
+    .hero-name { font-size: 1.75rem; font-weight: 800; color: var(--text); margin-bottom: 4px; line-height: 1.1; letter-spacing: -0.5px; }
+    .hero-sub { font-size: 0.8rem; color: var(--muted); margin-bottom: 16px; font-weight: 500; }
+    
+    .hero-action {  
+      background: rgba(0, 0, 0, 0.03);  
+      border-left: 4px solid var(--rose);  
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;  
+      padding: 14px 16px;  
+      font-size: 0.9rem;  
+      font-weight: 600;  
+      color: var(--text);  
+      line-height: 1.4;  
+    }
+    [data-theme="masculine"] .hero-action { background: rgba(255, 255, 255, 0.03); }
+    
+    .hero-chance { margin-top: 12px; font-size: 0.75rem; font-family: var(--font-mono); font-weight: 700; color: var(--muted); }
+    .cd-row { display: flex; gap: 8px; margin-top: 16px; }
+    .cd-box {  
+      flex: 1;  
+      background: var(--surface2);  
+      border: 1px solid var(--border);  
+      border-radius: var(--radius-md);  
+      padding: 12px 6px;  
+      text-align: center;
+    }
+    .cd-num { font-family: var(--font-mono); font-size: 1.6rem; font-weight: 700; color: var(--rose); line-height: 1; }
+    .cd-lbl { font-size: 0.6rem; font-weight: 600; text-transform: uppercase; color: var(--muted); margin-top: 4px; line-height: 1.2; }
+    
+    .card {  
+      margin: 16px 16px 0;  
+      background: var(--surface);  
+      border-radius: var(--radius-lg);  
+      padding: 24px;  
+      border: 1px solid var(--border);  
+    }
+    .sec-lbl {  
+      font-family: var(--font-mono);
+      font-size: 0.7rem;  
+      letter-spacing: 1px;  
+      text-transform: uppercase;  
+      color: var(--rose);  
+      margin-bottom: 16px;  
+      font-weight: 700;
+    }
+    .field { margin-bottom: 14px; }
+    .field label {  
+      display: block;  
+      font-size: 0.7rem;  
+      font-weight: 600;
+      text-transform: uppercase;  
+      color: var(--muted);  
+      margin-bottom: 6px;
+    }
+    .field input {  
+      width: 100%;  
+      background: var(--surface2);  
+      border: 1px solid var(--border);  
+      border-radius: var(--radius-md);  
+      padding: 12px 14px;  
+      font-family: var(--font-primary);  
+      font-size: 0.9rem;  
+      color: var(--text);  
+      outline: none;  
+      transition: border-color 0.2s;
+    }
+    .field input:focus { border-color: var(--rose); }
+    
+    .btn {  
+      width: 100%;  
+      padding: 14px;  
+      background: var(--rose);  
+      border: none;  
+      border-radius: var(--radius-md);  
+      font-family: var(--font-primary);  
+      font-size: 0.85rem;  
+      font-weight: 700;  
+      text-transform: uppercase;  
+      color: #fff;  
+      cursor: pointer;  
+      transition: background 0.2s;  
+      margin-top: 6px;
+    }
+    .btn:hover { background: var(--rose-dark); }
+    
+    .symptom-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-bottom: 14px; }
+    .symptom-btn {  
+      padding: 12px;  
+      background: var(--surface2);  
+      border: 1px solid var(--border);  
+      border-radius: var(--radius-md);  
+      font-family: var(--font-primary);  
+      font-size: 0.8rem;  
+      color: var(--text);  
+      cursor: pointer;  
+      transition: all 0.2s;  
+      text-align: left;
+    }
+    .symptom-btn:hover { border-color: var(--rose); }
+    .symptom-btn.active { background: var(--rose); color: #fff; border-color: var(--rose); font-weight: 600; }
+    
+    .notes-field textarea {  
+      width: 100%;  
+      min-height: 80px;  
+      background: var(--surface2);  
+      border: 1px solid var(--border);  
+      border-radius: var(--radius-md);  
+      padding: 12px 14px;  
+      font-family: var(--font-primary);  
+      font-size: 0.85rem;  
+      color: var(--text);  
+      outline: none;  
+      resize: vertical;
+    }
+    .notes-field textarea:focus { border-color: var(--rose); }
+    
+    .log-history { margin-top: 16px; max-height: 300px; overflow-y: auto; }
+    .log-entry { background: var(--surface2); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 12px; margin-bottom: 8px; font-size: 0.8rem; }
+    .log-date { font-family: var(--font-mono); font-size: 0.65rem; text-transform: uppercase; color: var(--rose); font-weight: 700; margin-bottom: 4px; }
+    .log-symptoms { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 6px; }
+    .log-tag { display: inline-block; padding: 4px 8px; background: var(--border); border-radius: var(--radius-sm); font-size: 0.7rem; color: var(--text); }
+    .log-notes { color: var(--muted); font-size: 0.8rem; line-height: 1.4; }
+    
+    .moves { margin: 16px 16px 0; }
+    .move { border-radius: var(--radius-lg); margin-bottom: 12px; overflow: hidden; border: 1px solid var(--border); background: var(--surface); transition: transform 0.2s; }
+    .move:hover { transform: translateY(-2px); }
+    .move-head { display: flex; align-items: flex-start; gap: 12px; padding: 16px 16px 12px; }
+    .move-n { font-family: var(--font-mono); font-size: 2rem; font-weight: 700; line-height: 1; opacity: 0.2; flex-shrink: 0; }
+    .move-tag { font-family: var(--font-mono); font-size: 0.6rem; text-transform: uppercase; font-weight: 700; margin-bottom: 4px; }
+    .move-title { font-size: 1rem; font-weight: 700; line-height: 1.3; color: var(--text); }
+    .move-body { padding: 12px 16px 16px; font-size: 0.8rem; color: var(--muted); line-height: 1.5; border-top: 1px solid var(--border); }
+    
+    .m-period { border-color: var(--period-col); } .m-period .move-tag, .m-period .move-n { color: var(--period-col); }
+    .m-follicular { border-color: var(--follicular-col); } .m-follicular .move-tag, .m-follicular .move-n { color: var(--follicular-col); }
+    .m-ovulation { border-color: var(--ovulation-col); } .m-ovulation .move-tag, .m-ovulation .move-n { color: var(--ovulation-col); }
+    .m-luteal { border-color: var(--luteal-col); } .m-luteal .move-tag, .m-luteal .move-n { color: var(--luteal-col); }
+    
+    .month-nav { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+    .month-nav button {  
+      background: var(--surface2);  
+      border: 1px solid var(--border);  
+      color: var(--text);  
+      width: 32px; height: 32px;  
+      border-radius: 50%;  
+      cursor: pointer;  
+      font-size: 1rem;  
+      display: flex; align-items: center; justify-content: center;
+    }
+    .month-lbl { font-family: var(--font-mono); font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: var(--text); }
+    .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
+    .dow { text-align: center; font-family: var(--font-mono); font-size: 0.6rem; text-transform: uppercase; color: var(--muted); padding-bottom: 6px; font-weight: 700; }
+    .day {  
+      aspect-ratio: 1;  
+      display: flex;  
+      align-items: center;  
+      justify-content: center;  
+      border-radius: 50%;  
+      font-size: 0.8rem;  
+      font-weight: 600;  
+      cursor: pointer;  
+      color: var(--text);
+    }
+    .day:hover:not(.empty) { background: var(--surface2); }
+    .day.empty { cursor: default; }
+    .day.today { border: 2px solid var(--rose); color: var(--rose); }
+    .day.d-period { background: var(--period-col); color: #fff; }
+    .day.d-follicular { background: var(--follicular-col); color: #fff; }
+    .day.d-ovulation { background: var(--ovulation-col); color: #fff; }
+    .day.d-luteal { background: var(--luteal-col); color: #fff; }
+    .day.d-predicted { border: 2px dashed var(--period-col); }
+    
+    .legend { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border); }
+    .leg { display: flex; align-items: center; gap: 4px; font-size: 0.65rem; color: var(--muted); font-weight: 600; }
+    .leg-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+    
+    .play-wrap { padding: 0 16px 24px; }
+    .play-phase-select { margin: 16px 0 12px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 16px; }
+    .play-phase-lbl { font-family: var(--font-mono); font-size: 0.65rem; text-transform: uppercase; color: var(--muted); font-weight: 700; margin-bottom: 10px; }
+    .play-phase-btns { display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px; }
+    .play-phase-btn {  
+      padding: 10px;  
+      border: 1px solid var(--border);  
+      border-radius: var(--radius-md);  
+      background: var(--surface2);  
+      font-family: var(--font-primary);  
+      font-size: 0.75rem;  
+      font-weight: 600;  
+      color: var(--muted);  
+      cursor: pointer;  
+      text-align: center;
+    }
+    .play-phase-btn.active { background: var(--rose); color: #fff; border-color: var(--rose); }
+    
+    .score-hero { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 20px; margin-bottom: 12px; }
+    .score-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+    .score-phase-label { font-family: var(--font-mono); font-size: 0.65rem; text-transform: uppercase; color: var(--muted); margin-bottom: 2px; font-weight: 700; }
+    .score-phase-name { font-size: 1.25rem; font-weight: 800; color: var(--text); }
+    .score-ring-wrap { display: flex; flex-direction: column; align-items: center; }
+    .score-ring { position: relative; width: 72px; height: 72px; }
+    .score-ring svg { transform: rotate(-90deg); }
+    .score-num { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-family: var(--font-mono); font-size: 1.4rem; font-weight: 700; color: var(--text); line-height: 1; }
+    .score-denom { font-size: 0.65rem; color: var(--muted); font-weight: 500; }
+    
+    .outlook-pill { display: inline-block; padding: 4px 10px; border-radius: var(--radius-sm); font-size: 0.65rem; font-weight: 700; text-transform: uppercase; font-family: var(--font-mono); margin-top: 6px; }
+    .outlook-green { background: var(--green-bg); color: var(--green); border: 1px solid var(--green-border); }
+    .outlook-amber { background: var(--amber-bg); color: var(--amber); border: 1px solid var(--amber-border); }
+    .outlook-red { background: var(--red-bg); color: var(--red); border: 1px solid var(--red-border); }
+    
+    .prog-bar-wrap { height: 6px; background: var(--surface2); border-radius: 100px; overflow: hidden; margin-top: 12px; }
+    .prog-bar-fill { height: 100%; background: var(--rose); border-radius: 100px; transition: width 0.3s ease; }
+    .prog-labels { display: flex; justify-content: space-between; margin-top: 4px; font-size: 0.65rem; color: var(--muted); font-weight: 600; }
+    
+    .checklist-section { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 20px; margin-bottom: 12px; }
+    .task { display: flex; align-items: flex-start; gap: 10px; padding: 10px 0; border-bottom: 1px solid var(--border); cursor: pointer; }
+    .task:last-of-type { border-bottom: none; }
+    .task-check { width: 18px; height: 18px; border-radius: 4px; border: 1px solid var(--border); flex-shrink: 0; display: flex; align-items: center; justify-content: center; background: var(--surface2); margin-top: 2px; }
+    .task.done .task-check { background: var(--rose); border-color: var(--rose); }
+    .task-text { font-size: 0.85rem; line-height: 1.4; color: var(--text); flex: 1; }
+    .task.done .task-text { color: var(--muted); text-decoration: line-through; }
+    .task-pts { font-family: var(--font-mono); font-size: 0.65rem; font-weight: 700; color: var(--rose); padding-top: 2px; }
+    .task-progress-row { display: flex; justify-content: space-between; margin-top: 12px; font-size: 0.65rem; color: var(--muted); font-weight: 600; }
+    
+    .avoid-section { background: var(--red-bg); border: 1px solid var(--red-border); border-radius: var(--radius-lg); padding: 20px; margin-bottom: 12px; }
+    .avoid-lbl { font-family: var(--font-mono); font-size: 0.65rem; text-transform: uppercase; color: var(--red); margin-bottom: 10px; font-weight: 700; }
+    .avoid-item { display: flex; align-items: flex-start; gap: 8px; padding: 8px 0; font-size: 0.82rem; line-height: 1.4; color: var(--text); border-bottom: 1px solid var(--red-border); }
+    .avoid-item:last-child { border-bottom: none; }
+    
+    .toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(100px); background: var(--text); color: var(--bg); padding: 10px 20px; border-radius: var(--radius-sm); font-size: 0.75rem; font-weight: 700; font-family: var(--font-mono); text-transform: uppercase; transition: transform 0.3s; z-index: 999; }
+    .toast.show { transform: translateX(-50%) translateY(0); }
+    
+    .phase-hero, .card, .moves, .play-wrap { animation: fadeUp 0.3s ease both; }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+  </style>
 </head>
-<body data-new-gr-c-s-check-loaded="14.1282.0" data-gr-ext-installed="">
+<body>
 
 <header>
-  <div class="eyebrow">Partner Cycle Tracker</div>
-  <h1>Know Her <span>Show up right, every time</span></h1>
+  <div class="brand-meta">
+    <div class="eyebrow">Partner Cycle Tracker</div>
+    <h1>Know Her <span>Show up right, every time</span></h1>
+  </div>
+  <button class="theme-toggle" onclick="toggleTheme()" id="themeToggleBtn">Command Mode</button>
 </header>
 
+<nav class="tab-nav">
+  <button class="tab-btn active" onclick="switchTab('today')">Today</button>
+  <button class="tab-btn" onclick="switchTab('moves')">4 Moves</button>
+  <button class="tab-btn" onclick="switchTab('checkin')">Check-In</button>
+  <button class="tab-btn" onclick="switchTab('calendar')">Calendar</button>
+  <button class="tab-btn" onclick="switchTab('play')">Play Score</button>
+</nav>
+
 <main>
-
-  <!-- HERO -->
-  <div class="phase-hero hero-luteal" id="phaseHero">
-    <div class="hero-top">
-      <span class="phase-dot" id="phaseDot" style="background: var(--luteal-col);"></span>
-      <span class="hero-lbl" id="heroLbl">Current Phase</span>
+  <div class="tab-panel active" id="tab-today">
+    <div class="phase-hero hero-luteal" id="phaseHero">
+      <div class="hero-top">
+        <span class="phase-dot" id="phaseDot" style="background: var(--luteal-col);"></span>
+        <span class="hero-lbl" id="heroLbl">Current Phase</span>
+      </div>
+      <div class="hero-name" id="heroName">Luteal Phase</div>
+      <div class="hero-sub" id="heroSub">Day 20 of 28-day cycle</div>
+      <div class="hero-action" id="heroAction" style="border-left-color: var(--luteal-col);">Cook together and have deep conversations.</div>
+      <div class="hero-chance" id="heroChance">MEDIUM — Chance of getting pregnant</div>
+      <div class="cd-row" id="cdRow" style="display: flex;">
+        <div class="cd-box"><div class="cd-num" id="cdP">8</div><div class="cd-lbl">Days to<br>Period</div></div>
+        <div class="cd-box"><div class="cd-num" id="cdO">22</div><div class="cd-lbl">Days to<br>Ovulation</div></div>
+        <div class="cd-box"><div class="cd-num" id="cdD">20</div><div class="cd-lbl">Cycle<br>Day</div></div>
+      </div>
     </div>
-    <div class="hero-name" id="heroName">Luteal Phase</div>
-    <div class="hero-sub" id="heroSub">Day 20 of 28-day cycle</div>
-    <div class="hero-action" id="heroAction" style="border-left-color: var(--luteal-col);">🍳 Cook together and have deep conversations.</div>
-    <div class="hero-chance" id="heroChance">MEDIUM — Chance of getting pregnant</div>
-    <div class="cd-row" id="cdRow" style="display: flex;">
-      <div class="cd-box"><div class="cd-num" id="cdP">8</div><div class="cd-lbl">Days to<br>Period</div></div>
-      <div class="cd-box"><div class="cd-num" id="cdO">22</div><div class="cd-lbl">Days to<br>Ovulation</div></div>
-      <div class="cd-box"><div class="cd-num" id="cdD">20</div><div class="cd-lbl">Cycle<br>Day</div></div>
+
+    <div class="card">
+      <div class="sec-lbl">Her Cycle Setup</div>
+      <div class="field">
+        <label>Last Period Start Date</label>
+        <input type="date" id="fStart">
+      </div>
+      <div class="field">
+        <label>Period Duration (days)</label>
+        <input type="number" id="fDur" min="2" max="10" value="4">
+      </div>
+      <div class="field">
+        <label>Cycle Length (days)</label>
+        <input type="number" id="fLen" min="21" max="45" value="28">
+      </div>
+      <button class="btn" onclick="saveCycle()">Save &amp; Track</button>
     </div>
   </div>
 
-  <!-- SETUP -->
-  <div class="card">
-    <div class="sec-lbl">Her Cycle Setup</div>
-    <div class="field">
-      <label>Last Period Start Date</label>
-      <input type="date" id="fStart">
+  <div class="tab-panel" id="tab-moves">
+    <div class="moves" style="margin-top: 20px;">
+      <div class="move m-ovulation">
+        <div class="move-head">
+          <div class="move-n">01</div>
+          <div>
+            <div class="move-tag">Ovulation · Days 14–16</div>
+            <div class="move-title">Plan a FUN date when she's ovulating</div>
+          </div>
+        </div>
+        <div class="move-body">Peak confidence, peak connection. She's magnetic, social, adventurous. Take her somewhere that requires effort — climbing, a new restaurant, a drive. She'll remember it. So will you.</div>
+      </div>
+
+      <div class="move m-follicular">
+        <div class="move-head">
+          <div class="move-n">02</div>
+          <div>
+            <div class="move-tag">Follicular Phase · Days 5–13</div>
+            <div class="move-title">Workout together when her period is over</div>
+          </div>
+        </div>
+        <div class="move-body">Estrogen is rising, energy is building. She's motivated, strong, mentally sharp. Hit the gym, go for a run. This is her power phase — match her energy.</div>
+      </div>
+
+      <div class="move m-luteal">
+        <div class="move-head">
+          <div class="move-n">03</div>
+          <div>
+            <div class="move-tag">Luteal Phase · Days 17–28</div>
+            <div class="move-title">Cook &amp; have deep conversations in her luteal phase</div>
+          </div>
+        </div>
+        <div class="move-body">She's turning inward. Less social, more reflective. This is when she needs real connection, not distractions. Cook together, talk, listen more than you speak. Don't take moodiness personally.</div>
+      </div>
+
+      <div class="move m-period">
+        <div class="move-head">
+          <div class="move-n">04</div>
+          <div>
+            <div class="move-tag">Period Phase · Days 1–4</div>
+            <div class="move-title">Buy her favourite meal when she's on her period</div>
+          </div>
+        </div>
+        <div class="move-body">She's losing energy and iron. Don't ask what she wants — just get it. Reduce friction, increase comfort. Heating pad, her food, quiet company. Be present, not loud.</div>
+      </div>
     </div>
-    <div class="field">
-      <label>Period Duration (days)</label>
-      <input type="number" id="fDur" min="2" max="10" value="4">
-    </div>
-    <div class="field">
-      <label>Cycle Length (days)</label>
-      <input type="number" id="fLen" min="21" max="45" value="28">
-    </div>
-    <button class="btn" onclick="saveCycle()">Save &amp; Track</button>
   </div>
 
-  <!-- 4 MOVES -->
-  <div class="moves">
-    <div class="sec-lbl" style="padding:0 4px">The 4 Moves</div>
+  <div class="tab-panel" id="tab-checkin">
+    <div class="card" style="margin-top: 20px;">
+      <div class="sec-lbl">Today's Check-In</div>
+      <div class="symptom-grid">
+        <button class="symptom-btn" data-symptom="irritable" onclick="toggleSymptom('irritable')">😤 Irritable</button>
+        <button class="symptom-btn" data-symptom="tired" onclick="toggleSymptom('tired')">😴 Tired</button>
+        <button class="symptom-btn" data-symptom="bloated" onclick="toggleSymptom('bloated')">🎈 Bloated</button>
+        <button class="symptom-btn" data-symptom="cramps" onclick="toggleSymptom('cramps')">😣 Cramps</button>
+        <button class="symptom-btn" data-symptom="sad" onclick="toggleSymptom('sad')">😢 Sad/Down</button>
+        <button class="symptom-btn" data-symptom="anxious" onclick="toggleSymptom('anxious')">😰 Anxious</button>
+        <button class="symptom-btn" data-symptom="energetic" onclick="toggleSymptom('energetic')">⚡ Energetic</button>
+        <button class="symptom-btn" data-symptom="social" onclick="toggleSymptom('social')">🗣️ Social</button>
+      </div>
+      <div class="notes-field">
+        <label>Notes (optional)</label>
+        <textarea id="logNotes" placeholder="Any context worth remembering..."></textarea>
+      </div>
+      <button class="btn" onclick="saveLog()">Log Today</button>
+      <div class="log-history" id="logHistory"></div>
+    </div>
+  </div>
 
-    <div class="move m-ovulation">
-      <div class="move-dot" id="ind-ovulation" style="display: none;"></div>
-      <div class="move-head">
-        <div class="move-n">1</div>
-        <div>
-          <div class="move-tag">Ovulation · Days 14–16</div>
-          <div class="move-title">Plan a FUN date when she's ovulating</div>
+  <div class="tab-panel" id="tab-calendar">
+    <div class="card" style="margin-top: 20px;">
+      <div class="sec-lbl">Cycle Calendar</div>
+      <div class="month-nav">
+        <button onclick="changeMonth(-1)">&#8249;</button>
+        <div class="month-lbl" id="monthLbl">June 2026</div>
+        <button onclick="changeMonth(1)">&#8250;</button>
+      </div>
+      <div class="cal-grid" id="calGrid"></div>
+      <div class="legend">
+        <div class="leg"><div class="leg-dot" style="background:var(--period-col)"></div>Period</div>
+        <div class="leg"><div class="leg-dot" style="background:var(--follicular-col)"></div>Follicular</div>
+        <div class="leg"><div class="leg-dot" style="background:var(--ovulation-col)"></div>Ovulation</div>
+        <div class="leg"><div class="leg-dot" style="background:var(--luteal-col)"></div>Luteal</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tab-panel" id="tab-play">
+    <div class="play-wrap">
+      <div class="play-phase-select">
+        <div class="play-phase-lbl">Her current phase</div>
+        <div class="play-phase-btns">
+          <button class="play-phase-btn" onclick="setPlayPhase('period')">Period</button>
+          <button class="play-phase-btn active" onclick="setPlayPhase('follicular')">Follicular</button>
+          <button class="play-phase-btn" onclick="setPlayPhase('ovulation')">Ovulation</button>
+          <button class="play-phase-btn" onclick="setPlayPhase('luteal')">Luteal</button>
         </div>
       </div>
-      <div class="move-body">Peak confidence, peak connection. She's magnetic, social, adventurous. Take her somewhere that requires effort — climbing, a new restaurant, a drive. She'll remember it. So will you.</div>
-    </div>
 
-    <div class="move m-follicular">
-      <div class="move-dot" id="ind-follicular" style="display: none;"></div>
-      <div class="move-head">
-        <div class="move-n">2</div>
-        <div>
-          <div class="move-tag">Follicular Phase · Days 5–13</div>
-          <div class="move-title">Workout together when her period is over</div>
+      <div class="score-hero">
+        <div class="score-top">
+          <div class="score-phase-info">
+            <div class="score-phase-label">Tonight's outlook</div>
+            <div class="score-phase-name" id="playPhaseName">Follicular Phase</div>
+            <div>
+              <span class="outlook-pill outlook-green" id="playOutlookPill">Good tonight</span>
+            </div>
+          </div>
+          <div class="score-ring-wrap">
+            <div class="score-ring">
+              <svg width="72" height="72" viewBox="0 0 88 88">
+                <circle cx="44" cy="44" r="36" fill="none" stroke="var(--border)" stroke-width="8"/>
+                <circle cx="44" cy="44" r="36" fill="none" stroke="var(--rose)" stroke-width="8"
+                  stroke-linecap="round" stroke-dasharray="226.2"
+                  id="playRingArc" stroke-dashoffset="226.2"/>
+              </svg>
+              <div class="score-num" id="playScoreNum">0<span class="score-denom">/10</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="prog-bar-wrap">
+          <div class="prog-bar-fill" id="playProgressBar" style="width: 0%"></div>
+        </div>
+        <div class="prog-labels">
+          <span>Low Energy</span>
+          <span id="playProgressNote">Rising energy, decent window</span>
+          <span>Peak</span>
         </div>
       </div>
-      <div class="move-body">Estrogen is rising, energy is building. She's motivated, strong, mentally sharp. Hit the gym, go for a run. This is her power phase — match her energy.</div>
-    </div>
 
-    <div class="move m-luteal">
-      <div class="move-dot" id="ind-luteal" style="display: block;"></div>
-      <div class="move-head">
-        <div class="move-n">3</div>
-        <div>
-          <div class="move-tag">Luteal Phase · Days 17–28</div>
-          <div class="move-title">Cook &amp; have deep conversations in her luteal phase</div>
+      <div class="checklist-section">
+        <div class="sec-lbl">Your moves today</div>
+        <div id="playTaskList"></div>
+        <div class="prog-bar-wrap" style="margin-top: 14px;">
+          <div class="prog-bar-fill" id="playTaskBar" style="width: 0%"></div>
+        </div>
+        <div class="task-progress-row">
+          <span id="playTasksDone">0 done</span>
+          <span id="playPointsEarned">0 pts</span>
         </div>
       </div>
-      <div class="move-body">She's turning inward. Less social, more reflective. This is when she needs real connection, not distractions. Cook together, talk, listen more than you speak. Don't take moodiness personally.</div>
-    </div>
 
-    <div class="move m-period">
-      <div class="move-dot" id="ind-period" style="display: none;"></div>
-      <div class="move-head">
-        <div class="move-n">4</div>
-        <div>
-          <div class="move-tag">Period Phase · Days 1–4</div>
-          <div class="move-title">Buy her favourite meal when she's on her period</div>
+      <div class="avoid-section">
+        <div class="avoid-lbl">Kill list — don't do this today</div>
+        <div id="playAvoidList">
+          <div class="avoid-item">❌ Checking phone during connection moments</div>
+          <div class="avoid-item">❌ Bringing up core logistics or deep analytics during wind-down sessions</div>
         </div>
       </div>
-      <div class="move-body">She's losing energy and iron. Don't ask what she wants — just get it. Reduce friction, increase comfort. Heating pad, her food, quiet company. Be present, not loud.</div>
     </div>
   </div>
-
-  <!-- SYMPTOM TRACKER -->
-  <div class="card" style="animation: fadeUp 0.45s 0.18s ease both">
-    <div class="sec-lbl">Today's Check-In</div>
-    <div class="symptom-grid">
-      <button class="symptom-btn" data-symptom="irritable" onclick="toggleSymptom('irritable')">😤 Irritable</button>
-      <button class="symptom-btn" data-symptom="tired" onclick="toggleSymptom('tired')">😴 Tired</button>
-      <button class="symptom-btn" data-symptom="bloated" onclick="toggleSymptom('bloated')">🎈 Bloated</button>
-      <button class="symptom-btn" data-symptom="cramps" onclick="toggleSymptom('cramps')">😣 Cramps</button>
-      <button class="symptom-btn" data-symptom="sad" onclick="toggleSymptom('sad')">😢 Sad/Down</button>
-      <button class="symptom-btn" data-symptom="anxious" onclick="toggleSymptom('anxious')">😰 Anxious</button>
-      <button class="symptom-btn" data-symptom="energetic" onclick="toggleSymptom('energetic')">⚡ Energetic</button>
-      <button class="symptom-btn" data-symptom="social" onclick="toggleSymptom('social')">🗣️ Social</button>
-    </div>
-    <div class="notes-field">
-      <label style="display: block; font-size: 0.65rem; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-bottom: 7px;">Notes (optional)</label>
-      <textarea id="logNotes" placeholder="Any context worth remembering..."></textarea>
-    </div>
-    <button class="btn" onclick="saveLog()">Log Today</button>
-    <div class="log-history" id="logHistory"></div>
-  </div>
-
-  <!-- CALENDAR -->
-  <div class="card" style="animation: fadeUp 0.45s 0.2s ease both">
-    <div class="sec-lbl">Cycle Calendar</div>
-    <div class="month-nav">
-      <button onclick="changeMonth(-1)">‹</button>
-      <div class="month-lbl" id="monthLbl">March 2026</div>
-      <button onclick="changeMonth(1)">›</button>
-    </div>
-    <div class="cal-grid" id="calGrid"><div class="dow">S</div><div class="dow">M</div><div class="dow">T</div><div class="dow">W</div><div class="dow">T</div><div class="dow">F</div><div class="dow">S</div><div class="day">1</div><div class="day">2</div><div class="day">3</div><div class="day">4</div><div class="day">5</div><div class="day">6</div><div class="day">7</div><div class="day">8</div><div class="day">9</div><div class="day">10</div><div class="day">11</div><div class="day">12</div><div class="day">13</div><div class="day">14</div><div class="day">15</div><div class="day">16</div><div class="day">17</div><div class="day">18</div><div class="day">19</div><div class="day d-period">20</div><div class="day d-period">21</div><div class="day d-period">22</div><div class="day d-period">23</div><div class="day d-follicular">24</div><div class="day d-follicular">25</div><div class="day d-follicular">26</div><div class="day d-follicular">27</div><div class="day d-follicular">28</div><div class="day d-ovulation">29</div><div class="day d-ovulation">30</div><div class="day d-ovulation">31</div></div>
-    <div class="legend">
-      <div class="leg"><div class="leg-dot" style="background:var(--period-col)"></div>Period</div>
-      <div class="leg"><div class="leg-dot" style="background:#a8d8f0"></div>Follicular</div>
-      <div class="leg"><div class="leg-dot" style="background:var(--ovulation-col)"></div>Ovulation</div>
-      <div class="leg"><div class="leg-dot" style="background:#c8a8e8"></div>Luteal</div>
-      <div class="leg"><div class="leg-dot" style="background:#fcd0d0"></div>Predicted</div>
-    </div>
-  </div>
-
 </main>
 
 <div class="toast" id="toast"></div>
 
 <script>
-const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
-const DOW = ['S','M','T','W','T','F','S'];
+  // Core Tracking System Logic Preservation
+  const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  let appData = { start: '', duration: 4, cycleLen: 28, logs: {} };
+  let view = { month: new Date().getMonth(), year: new Date().getFullYear() };
+  let selectedSymptoms = [];
 
-let data = { start: '', duration: 4, cycleLen: 28, logs: {} };
-let view = { month: 2, year: 2026 };
+  // Interactive Checklist Database Matrix
+  let runwayTasks = [
+    { id: "m-prox", phase: "Morning Connection", task: "Spend 2 minutes sitting next to her with no phone or chore talk", points: 15, completed: false },
+    { id: "m-text", phase: "Morning Connection", task: "Send one direct, warm text: 'Thinking about you right now'", points: 15, completed: false },
+    { id: "a-touch", phase: "Afternoon Transition", task: "Give a deliberate, six-second hug when seeing her after work", points: 20, completed: false },
+    { id: "a-clutter", phase: "Afternoon Transition", task: "Clear one specific visual clutter friction point to drop her load", points: 20, completed: false },
+    { id: "e-val", phase: "Evening Ritual", task: "Share one specific, concrete observation of appreciation", points: 15, completed: false },
+    { id: "e-cue", phase: "Evening Ritual", task: "Set a clear environmental transition cue like dimming bedroom lights", points: 15, completed: false }
+  ];
 
-function loadData() {
-  try { const s = localStorage.getItem('knowher_v3'); if (s) data = JSON.parse(s); } catch(e) {}
-}
-
-function saveData() { localStorage.setItem('knowher_v3', JSON.stringify(data)); }
-
-function seedDefaults() {
-  if (!localStorage.getItem('knowher_v3')) {
-    data = { start: '2026-03-22', duration: 4, cycleLen: 28 };
-    saveData();
-  }
-}
-
-function showToast(msg) {
-  const el = document.getElementById('toast');
-  el.textContent = msg;
-  el.classList.add('show');
-  setTimeout(() => el.classList.remove('show'), 2600);
-}
-
-function ds(d) { return d.toISOString().split('T')[0]; }
-
-function addDays(str, n) {
-  const d = new Date(str + 'T00:00:00');
-  d.setDate(d.getDate() + n);
-  return ds(d);
-}
-
-function diff(a, b) {
-  return Math.round((new Date(b + 'T00:00:00') - new Date(a + 'T00:00:00')) / 86400000);
-}
-
-function getCycleDay() {
-  if (!data.start) return null;
-  const today = ds(new Date());
-  let d = diff(data.start, today);
-  while (d >= data.cycleLen) d -= data.cycleLen;
-  while (d < 0) d += data.cycleLen;
-  return d + 1;
-}
-
-function phaseFor(day) {
-  const cl = data.cycleLen || 28;
-  const pl = data.duration || 4;
-  const ov = Math.round(cl - 14);
-  if (day <= pl)       return 'period';
-  if (day <= ov - 5)   return 'follicular';
-  if (day <= ov)       return 'ovulation';
-  if (day <= cl - 7)   return 'luteal';
-  return 'pms';
-}
-
-const META = {
-  period:     { name: 'Period Phase',     col: 'var(--period-col)',     bg: 'hero-menstrual',  action: '🍱 Buy her favourite meal. Reduce friction, maximise comfort.',              ind: 'ind-period'     },
-  follicular: { name: 'Follicular Phase', col: 'var(--follicular-col)', bg: 'hero-follicular', action: '🏋🏾 Workout together. Match her rising energy.',                           ind: 'ind-follicular' },
-  ovulation:  { name: 'Ovulation',        col: 'var(--ovulation-col)',  bg: 'hero-ovulation',  action: "📍 Plan a fun date. She's at peak energy and confidence.",                  ind: 'ind-ovulation'  },
-  luteal:     { name: 'Luteal Phase',     col: 'var(--luteal-col)',     bg: 'hero-luteal',     action: '🍳 Cook together. Good time for deep conversations and quality time.',       ind: 'ind-luteal'     },
-  pms:        { name: 'PMS Window',       col: 'var(--luteal-col)',     bg: 'hero-luteal',     action: '🤍 Lower expectations. Skip heavy topics. Ask what she needs, then do it.', ind: 'ind-luteal'     },
-};
-
-const CHANCE = {
-  period: 'LOW — Chance of getting pregnant',
-  follicular: 'LOW — Chance of getting pregnant',
-  ovulation: 'HIGH — Chance of getting pregnant',
-  luteal: 'MEDIUM — Chance of getting pregnant',
-  pms: 'LOW — Chance of getting pregnant',
-};
-
-function updateHero() {
-  const day = getCycleDay();
-  const hero = document.getElementById('phaseHero');
-
-  ['period','follicular','ovulation','luteal'].forEach(p => {
-    const el = document.getElementById('ind-' + p);
-    if (el) el.style.display = 'none';
-  });
-
-  if (!day || !data.start) {
-    document.getElementById('heroName').textContent = '—';
-    document.getElementById('heroSub').textContent = 'Log her period below to begin';
-    document.getElementById('heroAction').textContent = 'Set her cycle up below and this tells you exactly what to do today.';
-    document.getElementById('heroChance').textContent = '';
-    document.getElementById('cdRow').style.display = 'none';
-    return;
+  function toggleTheme() {
+    const currentTheme = document.documentElement.getAttribute('data-theme');
+    const targetTheme = currentTheme === 'masculine' ? 'classic' : 'masculine';
+    document.documentElement.setAttribute('data-theme', targetTheme);
+    
+    const btn = document.getElementById('themeToggleBtn');
+    btn.textContent = targetTheme === 'masculine' ? 'Classic Mode' : 'Command Mode';
+    localStorage.setItem('tracker_theme', targetTheme);
   }
 
-  const phase = phaseFor(day);
-  const m = META[phase];
+  // Restore theme preference on immediate load execution
+  (function() {
+    const savedTheme = localStorage.getItem('tracker_theme');
+    if (savedTheme === 'masculine') {
+      document.documentElement.setAttribute('data-theme', 'masculine');
+      window.addEventListener('DOMContentLoaded', () => {
+        document.getElementById('themeToggleBtn').textContent = 'Classic Mode';
+      });
+    }
+  })();
 
-  hero.className = 'phase-hero ' + m.bg;
-  document.getElementById('phaseDot').style.background = m.col;
-  document.getElementById('heroLbl').textContent = 'Current Phase';
-  document.getElementById('heroName').textContent = m.name;
-  document.getElementById('heroSub').textContent = `Day ${day} of ${data.cycleLen}-day cycle`;
+  function switchTab(t) {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    
+    const targetBtn = Array.from(document.querySelectorAll('.tab-btn')).find(b => b.textContent.toLowerCase().includes(t.toLowerCase()));
+    if(targetBtn) targetBtn.classList.add('active');
+    
+    const panel = document.getElementById('tab-' + t);
+    if(panel) panel.classList.add('active');
 
-  const act = document.getElementById('heroAction');
-  act.textContent = m.action;
-  act.style.borderLeftColor = m.col;
+    if(t === 'play') {
+      renderPlayChecklist();
+    }
+  }
 
-  document.getElementById('heroChance').textContent = CHANCE[phase] || '';
+  // Live Checklist Renderer Integration
+  function renderPlayChecklist() {
+    const listContainer = document.getElementById('playTaskList');
+    if(!listContainer) return;
 
-  const ind = document.getElementById(m.ind);
-  if (ind) ind.style.display = 'block';
+    listContainer.innerHTML = '';
+    runwayTasks.forEach(item => {
+      const taskDiv = document.createElement('div');
+      taskDiv.className = `task ${item.completed ? 'done' : ''}`;
+      taskDiv.onclick = () => toggleRunwayTask(item.id);
+      taskDiv.innerHTML = `
+        <div class="task-check"></div>
+        <div class="task-text"><strong>[${item.phase}]</strong> ${item.task}</div>
+        <div class="task-pts">+${item.points}</div>
+      `;
+      listContainer.appendChild(taskDiv);
+    });
+    updatePlayMetrics();
+  }
 
-  const today = ds(new Date());
-  const cl = data.cycleLen;
+  function toggleRunwayTask(id) {
+    const task = runwayTasks.find(t => t.id === id);
+    if(task) {
+      task.completed = !task.completed;
+      renderPlayChecklist();
+    }
+  }
 
-  let nextP = addDays(data.start, cl);
-  let dtP = diff(today, nextP);
-  while (dtP < 0) dtP += cl;
+  function updatePlayMetrics() {
+    const doneCount = runwayTasks.filter(t => t.completed).length;
+    const currentPoints = runwayTasks.reduce((sum, t) => t.completed ? sum + t.points : sum, 0);
+    
+    document.getElementById('playTasksDone').textContent = `${doneCount} done`;
+    document.getElementById('playPointsEarned').textContent = `${currentPoints} pts`;
+    document.getElementById('playTaskBar').style.width = `${(doneCount / runwayTasks.length) * 100}%`;
+    document.getElementById('playProgressBar').style.width = `${currentPoints}%`;
+    document.getElementById('playScoreNum').innerHTML = `${Math.round(currentPoints / 10)}<span class="score-denom">/10</span>`;
 
-  let ovDate = addDays(data.start, cl - 14);
-  let dtO = diff(today, ovDate);
-  while (dtO <= 0) dtO += cl;
+    const arc = document.getElementById('playRingArc');
+    const circumference = 226.2;
+    arc.style.strokeDashoffset = circumference - (currentPoints / 100) * circumference;
+  }
 
-  document.getElementById('cdP').textContent = dtP;
-  document.getElementById('cdO').textContent = dtO;
-  document.getElementById('cdD').textContent = day;
-  document.getElementById('cdRow').style.display = 'flex';
-}
+  function setPlayPhase(phase) {
+    document.querySelectorAll('.play-phase-btn').forEach(b => b.classList.remove('active'));
+    const btn = Array.from(document.querySelectorAll('.play-phase-btn')).find(b => b.textContent.toLowerCase() === phase);
+    if(btn) btn.classList.add('active');
 
-function buildMarked() {
-  const marked = {};
-  if (!data.start) return marked;
-  const cl = data.cycleLen;
-  const today = ds(new Date());
+    const nameEl = document.getElementById('playPhaseName');
+    const pill = document.getElementById('playOutlookPill');
+    const note = document.getElementById('playProgressNote');
 
-  for (let cycle = 0; cycle < 4; cycle++) {
-    const cStart = addDays(data.start, cycle * cl);
-    for (let d = 0; d < cl; d++) {
-      const key = addDays(cStart, d);
-      const phase = phaseFor(d + 1);
-      if (cycle === 0) {
-        marked[key] = phase;
-      } else if (key >= today && !marked[key]) {
-        marked[key] = phase === 'period' ? 'predicted' : phase;
+    if(phase === 'period') {
+      nameEl.textContent = 'Period Phase';
+      pill.className = 'outlook-pill outlook-red';
+      pill.textContent = 'Fragile window';
+      note.textContent = 'Drained energy, structural support required';
+    } else if(phase === 'follicular') {
+      nameEl.textContent = 'Follicular Phase';
+      pill.className = 'outlook-pill outlook-green';
+      pill.textContent = 'Good tonight';
+      note.textContent = 'Rising energy, decent window';
+    } else if(phase === 'ovulation') {
+      nameEl.textContent = 'Ovulation Phase';
+      pill.className = 'outlook-pill outlook-green';
+      pill.textContent = 'Peak window';
+      note.textContent = 'High confidence, high validation target';
+    } else if(phase === 'luteal') {
+      nameEl.textContent = 'Luteal Phase';
+      pill.className = 'outlook-pill outlook-amber';
+      pill.textContent = 'Handle with care';
+      note.textContent = 'Inward focus, emotional reassurance critical';
+    }
+  }
+
+  // Check-In Functionality
+  function toggleSymptom(symptom) {
+    const btn = document.querySelector(`[data-symptom="${symptom}"]`);
+    if(btn.classList.contains('active')) {
+      btn.classList.remove('active');
+      selectedSymptoms = selectedSymptoms.filter(s => s !== symptom);
+    } else {
+      btn.classList.add('active');
+      selectedSymptoms.push(symptom);
+    }
+  }
+
+  function saveLog() {
+    const notes = document.getElementById('logNotes').value;
+    const todayStr = new Date().toISOString().split('T')[0];
+    appData.logs[todayStr] = { symptoms: [...selectedSymptoms], notes: notes };
+    localStorage.setItem('knowher_v4', JSON.stringify(appData));
+    showToast('Daily Log Saved');
+    renderLogHistory();
+    selectedSymptoms = [];
+    document.querySelectorAll('.symptom-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('logNotes').value = '';
+  }
+
+  function renderLogHistory() {
+    const hist = document.getElementById('logHistory');
+    if(!hist) return;
+    hist.innerHTML = '';
+    for(let date in appData.logs) {
+      const entry = appData.logs[date];
+      const div = document.createElement('div');
+      div.className = 'log-entry';
+      div.innerHTML = `
+        <div class="log-date">${date}</div>
+        <div class="log-symptoms">${entry.symptoms.map(s => `<span class="log-tag">${s}</span>`).join('')}</div>
+        <div class="log-notes">${entry.notes || ''}</div>
+      `;
+      hist.appendChild(div);
+    }
+  }
+
+  // Active Calendar Rendering Calculations Engine
+  function changeMonth(dir) {
+    view.month += dir;
+    if(view.month > 11) { view.month = 0; view.year++; }
+    if(view.month < 0) { view.month = 11; view.year--; }
+    renderCalendar();
+  }
+
+  function renderCalendar() {
+    const grid = document.getElementById('calGrid');
+    const lbl = document.getElementById('monthLbl');
+    if(!grid) return;
+
+    lbl.textContent = `${MONTHS[view.month]} ${view.year}`;
+    grid.innerHTML = '';
+
+    const dows = ['S','M','T','W','T','F','S'];
+    dows.forEach(d => {
+      const el = document.createElement('div');
+      el.className = 'dow';
+      el.textContent = d;
+      grid.appendChild(el);
+    });
+
+    const firstDay = new Date(view.year, view.month, 1).getDay();
+    const daysInMonth = new Date(view.year, view.month + 1, 0).getDate();
+
+    for(let i=0; i<firstDay; i++) {
+      const empty = document.createElement('div');
+      empty.className = 'day empty';
+      grid.appendChild(empty);
+    }
+
+    const today = new Date();
+    for(let d=1; d<=daysInMonth; d++) {
+      const dayEl = document.createElement('div');
+      dayEl.className = 'day';
+      dayEl.textContent = d;
+
+      if(d === today.getDate() && view.month === today.getMonth() && view.year === today.getFullYear()) {
+        dayEl.classList.add('today');
       }
+
+      // Context pseudo phase maps to test style rendering parameters
+      if(d >= 1 && d <= 4) dayEl.classList.add('d-period');
+      if(d >= 5 && d <= 13) dayEl.classList.add('d-follicular');
+      if(d >= 14 && d <= 16) dayEl.classList.add('d-ovulation');
+      if(d >= 17 && d <= 28) dayEl.classList.add('d-luteal');
+
+      grid.appendChild(dayEl);
     }
   }
-  return marked;
-}
 
-function renderCal() {
-  const { month, year } = view;
-  document.getElementById('monthLbl').textContent = `${MONTHS[month]} ${year}`;
-  const grid = document.getElementById('calGrid');
-  grid.innerHTML = '';
+  function saveCycle() {
+    appData.start = document.getElementById('fStart').value;
+    appData.duration = parseInt(document.getElementById('fDur').value);
+    appData.cycleLen = parseInt(document.getElementById('fLen').value);
+    localStorage.setItem('knowher_v4', JSON.stringify(appData));
+    showToast('Cycle Configuration Updated');
+  }
 
-  DOW.forEach(d => {
-    const el = document.createElement('div');
-    el.className = 'dow';
-    el.textContent = d;
-    grid.appendChild(el);
+  function showToast(msg) {
+    const el = document.getElementById('toast');
+    el.textContent = msg;
+    el.classList.add('show');
+    setTimeout(() => el.classList.remove('show'), 2600);
+  }
+
+  window.addEventListener('DOMContentLoaded', () => {
+    const saved = localStorage.getItem('knowher_v4');
+    if(saved) {
+      appData = JSON.parse(saved);
+      if(appData.start) document.getElementById('fStart').value = appData.start;
+      document.getElementById('fDur').value = appData.duration;
+      document.getElementById('fLen').value = appData.cycleLen;
+    }
+    renderCalendar();
+    renderLogHistory();
+    renderPlayChecklist();
   });
-
-  const firstDay = new Date(year, month, 1).getDay();
-  const total = new Date(year, month + 1, 0).getDate();
-  const today = ds(new Date());
-  const marked = buildMarked();
-
-  for (let i = 0; i < firstDay; i++) {
-    const el = document.createElement('div');
-    el.className = 'day empty';
-    grid.appendChild(el);
-  }
-
-  for (let d = 1; d <= total; d++) {
-    const key = `${year}-${String(month+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
-    const el = document.createElement('div');
-    el.className = 'day';
-    el.textContent = d;
-    if (key === today) el.classList.add('today');
-    const m = marked[key];
-    if (m) el.classList.add('d-' + m);
-    grid.appendChild(el);
-  }
-}
-
-function changeMonth(dir) {
-  view.month += dir;
-  if (view.month > 11) { view.month = 0; view.year++; }
-  if (view.month < 0)  { view.month = 11; view.year--; }
-  renderCal();
-}
-
-function saveCycle() {
-  const start = document.getElementById('fStart').value;
-  if (!start) { showToast('Select her period start date'); return; }
-  data.start = start;
-  data.duration = parseInt(document.getElementById('fDur').value) || 4;
-  data.cycleLen = parseInt(document.getElementById('fLen').value) || 28;
-  saveData();
-  updateHero();
-  renderCal();
-  showToast('Saved — you know her now');
-}
-
-let activeSymptoms = new Set();
-
-function toggleSymptom(symptom) {
-  const btn = document.querySelector(`[data-symptom="${symptom}"]`);
-  if (activeSymptoms.has(symptom)) {
-    activeSymptoms.delete(symptom);
-    btn.classList.remove('active');
-  } else {
-    activeSymptoms.add(symptom);
-    btn.classList.add('active');
-  }
-}
-
-function saveLog() {
-  if (activeSymptoms.size === 0 && !document.getElementById('logNotes').value.trim()) {
-    showToast('Select at least one symptom or add a note');
-    return;
-  }
-
-  const today = ds(new Date());
-  const day = getCycleDay();
-  const phase = day ? phaseFor(day) : 'unknown';
-  
-  if (!data.logs) data.logs = {};
-  
-  data.logs[today] = {
-    symptoms: Array.from(activeSymptoms),
-    notes: document.getElementById('logNotes').value.trim(),
-    day: day,
-    phase: phase
-  };
-  
-  saveData();
-  activeSymptoms.clear();
-  document.querySelectorAll('.symptom-btn').forEach(btn => btn.classList.remove('active'));
-  document.getElementById('logNotes').value = '';
-  renderLogs();
-  showToast('Logged');
-}
-
-function renderLogs() {
-  const container = document.getElementById('logHistory');
-  if (!data.logs || Object.keys(data.logs).length === 0) {
-    container.innerHTML = '';
-    return;
-  }
-
-  const entries = Object.entries(data.logs)
-    .sort((a, b) => b[0].localeCompare(a[0]))
-    .slice(0, 10);
-
-  container.innerHTML = entries.map(([date, log]) => {
-    const d = new Date(date + 'T00:00:00');
-    const formatted = d.toLocaleDateString('en-ZA', { month: 'short', day: 'numeric' });
-    
-    let symptomsHTML = '';
-    if (log.symptoms && log.symptoms.length > 0) {
-      symptomsHTML = `<div class="log-symptoms">${log.symptoms.map(s => 
-        `<span class="log-tag">${s}</span>`
-      ).join('')}</div>`;
-    }
-    
-    let notesHTML = '';
-    if (log.notes) {
-      notesHTML = `<div class="log-notes">${log.notes}</div>`;
-    }
-
-    let phaseInfo = '';
-    if (log.day && log.phase) {
-      phaseInfo = ` · Day ${log.day} (${log.phase})`;
-    }
-    
-    return `
-      <div class="log-entry">
-        <div class="log-date">${formatted}${phaseInfo}</div>
-        ${symptomsHTML}
-        ${notesHTML}
-      </div>
-    `;
-  }).join('');
-}
-
-function prefill() {
-  document.getElementById('fStart').value = data.start || ds(new Date());
-  document.getElementById('fDur').value = data.duration;
-  document.getElementById('fLen').value = data.cycleLen;
-}
-
-loadData();
-seedDefaults();
-loadData();
-prefill();
-updateHero();
-renderCal();
-renderLogs();
 </script>
-
-
-</body><grammarly-desktop-integration data-grammarly-shadow-root="true"><template shadowrootmode="open"><style>
-      div.grammarly-desktop-integration {
-        position: absolute;
-        width: 1px;
-        height: 1px;
-        padding: 0;
-        margin: -1px;
-        overflow: hidden;
-        clip: rect(0, 0, 0, 0);
-        white-space: nowrap;
-        border: 0;
-        -moz-user-select: none;
-        -webkit-user-select: none;
-        -ms-user-select:none;
-        user-select:none;
-      }
-
-      div.grammarly-desktop-integration:before {
-        content: attr(data-content);
-      }
-    </style><div aria-label="grammarly-integration" role="group" tabindex="-1" class="grammarly-desktop-integration" data-content="{&quot;mode&quot;:&quot;full&quot;,&quot;isActive&quot;:true,&quot;isUserDisabled&quot;:false}"></div></template></grammarly-desktop-integration></html>
+</body>
+</html>
